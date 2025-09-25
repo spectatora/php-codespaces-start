@@ -1,0 +1,41 @@
+{
+  "name": "PHP 8.4 Codespace",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": "..",
+    "args": {
+      "VARIANT": "8.4"
+    }
+  },
+  "remoteUser": "vscode",
+  "containerEnv": {
+    "XDEBUG_CLIENT_HOST": "host.docker.internal",
+    "XDEBUG_CLIENT_PORT": "9003"
+  },
+  "forwardPorts": [9003],
+  "postCreateCommand": "composer install --no-interaction --prefer-dist",
+  "postAttachCommand": "echo 'Use xdebug-on <command> to run CLI tools with Xdebug (e.g. xdebug-on composer test)'",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-pack"
+      ],
+      "settings": {
+        "php.debug.port": 9003,
+        "php.debug.ideKey": "VSCODE",
+        "php.validate.executablePath": "/usr/local/bin/php"
+      },
+      "launch": {
+        "configurations": [
+          {
+            "name": "Listen for Xdebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003
+          }
+        ]
+      }
+    }
+  }
+}
